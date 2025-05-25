@@ -23,6 +23,8 @@ public sealed class JwtAuthService : IJwtAuthService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity([new Claim("user_id", user.Id.ToString())]),
+            Audience = _config["Authentication:Audience"]!,
+            Issuer = _config["Authentication:Issuer"]!,
             Expires = DateTime.UtcNow.AddDays(double.Parse(_config["Authentication:ExpiresDays"]!)),
             SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
         };
